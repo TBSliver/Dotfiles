@@ -51,7 +51,11 @@ set ts=2        " Set tabstop
 set expandtab   " Set expandtab on, treats a tab as spaces
 set showmatch   " Set show matching brackets
 
-set directory=$HOME/.vim/swp//
+if has('win32')
+  set directory=$HOME/vimfiles/swp//
+else
+  set directory=$HOME/.vim/swp//
+endif
 
 "Syntastic settings
 set statusline+=%#warningmsg#
