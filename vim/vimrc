@@ -1,0 +1,109 @@
+let vimplug_path = '~/.vim/autoload'
+if has('win32')
+  let vimplug_path = '~/vimfiles/autoload'
+endif
+
+let vim_plug = vimplug_path . '/plug.vim'
+
+" auto-install vim-plug
+if !filereadable(expand(vim_plug))
+  execute "silent !mkdir -p " . vimplug_path
+  execute "silent !curl -fLo " . vim_plug . " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+Plug 'tpope/vim-sensible'
+
+Plug 'agude/vim-eldar'
+
+Plug 'itchyny/lightline.vim'
+
+Plug 'morhetz/gruvbox'
+
+Plug 'yko/mojo.vim', { 'do': 'make install' }
+
+Plug 'kchmck/vim-coffee-script'
+
+Plug 'scrooloose/nerdtree'
+
+"Plug 'HerringtonDarkholme/yats.vim'
+
+Plug 'leafgarland/typescript-vim'
+
+Plug 'vim-syntastic/syntastic'
+
+"Plug 'Xuyuanp/nerdtree-git-plugin'
+call plug#end()
+
+if has('syntax')
+  syntax enable
+  set bg=dark
+  silent! colorscheme gruvbox
+  hi Normal ctermbg=None
+  hi NonText ctermbg=None
+endif
+
+set ai          " Set autoindent
+set si          " Set smartindent
+set sw=2        " Set shiftwidth
+set ts=2        " Set tabstop
+set expandtab   " Set expandtab on, treats a tab as spaces
+set showmatch   " Set show matching brackets
+
+set directory=$HOME/.vim/swp//
+
+"Syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_typescript_checkers = ['tslint']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"set background=dark
+""set formatoptions=tcrqn2
+""set textwidth=74
+"set ruler
+"
+"syntax enable
+"
+"set nocompatible
+"filetype off
+"
+"filetype plugin on
+"" use a 72 column line length for text files
+"" autocmd FileType text setlocal textwidth=72
+"
+"" restore cursor on re-entry into a file
+"function! ResCur()
+"  if line("'\"") <= line("$")
+"    normal! g`"
+"    return 1
+"  endif
+"endfunction
+"
+"augroup resCur
+"  autocmd!
+"  autocmd BufWinEnter * call ResCur()
+"augroup END
+"
+"" My status bar config
+"set laststatus=2        " Make the statusbar show always
+"
+"set statusline=   " clear the statusline for when vimrc is reloaded
+"set statusline+=%-3.3n\                      " buffer number
+"set statusline+=%f\                          " file name
+"set statusline+=%h%m%r%w                     " flags
+"set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+"set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+"set statusline+=%{&fileformat}]              " file format
+"set statusline+=%=                           " right align
+"set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+"set statusline+=%b,0x%-8B\                   " current char
+"set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
+"
+"
+"command! AtTime :normal a<C-R>=strftime('at %Y-%m-%d %H:%M ')<CR>
