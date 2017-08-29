@@ -44,12 +44,12 @@ if has('syntax')
   hi NonText ctermbg=None
 endif
 
-set ai          " Set autoindent
-set si          " Set smartindent
-set sw=2        " Set shiftwidth
-set ts=2        " Set tabstop
-set expandtab   " Set expandtab on, treats a tab as spaces
-set showmatch   " Set show matching brackets
+set autoindent
+set smartindent
+set shiftwidth=2
+set tabstop=2
+set expandtab
+set showmatch
 
 if has('win32')
   set directory=$HOME/vimfiles/swp//
