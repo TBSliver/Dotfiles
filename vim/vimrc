@@ -51,11 +51,17 @@ set tabstop=2
 set expandtab
 set showmatch
 
+let swapfile_dir = '.vim/swp//'
 if has('win32')
-  set directory=$HOME/vimfiles/swp//
-else
-  set directory=$HOME/.vim/swp//
+  let swapfile_dir = 'vimfiles/swp//'
 endif
+
+if !isdirectory(expand('~/' . swapfile_dir))
+  execute "silent !mkdir -p ~/" . swapfile_dir
+endif
+
+exec 'set directory=$HOME/' . swapfile_dir
+
 
 "Syntastic settings
 set statusline+=%#warningmsg#
