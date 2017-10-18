@@ -7,6 +7,7 @@ endif
 
 let vim_plug = vimplug_path . '/plug.vim'
 
+
 " auto-install vim-plug
 if !filereadable(expand(vim_plug))
   let plugin_file = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -28,7 +29,7 @@ Plug 'itchyny/lightline.vim'
 
 Plug 'morhetz/gruvbox'
 
-Plug 'yko/mojo.vim', { 'do': 'make install' }
+"Plug 'yko/mojo.vim', { 'do': 'make install' }
 
 Plug 'kchmck/vim-coffee-script'
 
@@ -40,7 +41,9 @@ Plug 'leafgarland/typescript-vim'
 
 Plug 'vim-syntastic/syntastic'
 
-"Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'lervag/vimtex'
 call plug#end()
 
 if has('syntax')
@@ -81,6 +84,15 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+let g:syntastic_tex_checkers = []
+
+let g:vimtex_syntax_minted = [
+  \ {
+  \  'lang': 'perl',
+  \  'environments': [ 'perlcode' ]
+  \ }
+  \]
+
 " restore cursor on re-entry into a file
 function! ResCur()
   if line("'\"") <= line("$")
@@ -93,3 +105,6 @@ augroup resCur
   autocmd!
   autocmd BufWinEnter * call ResCur()
 augroup END
+
+
+set guifont=Hack:h9:cANSI:qDRAFT
