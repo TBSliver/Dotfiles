@@ -1,0 +1,46 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+use Data::Dumper;
+
+my $keys = `ssh-add -l`;
+
+my $key_lookup = get_key_lookup();
+
+for my $line ( split(/\n/, $keys) ) {
+  my (undef, $fingerprint) = split(/\s+/, $line);
+
+  unless ( defined $key_lookup->{$fingerprint} ) {
+    # regenerate fingerprints and lookup, probably needed an update
+    print "Regenerating fingerprint lookup file\n";
+    generate_fingerprints();
+    $key_lookup = get_key_lookup();
+  }
+
+  printf "%s %s %s %s\n",
+    @{$key_lookup->{$fingerprint}}{qw/ size fingerprint filename type/};
+}
+
+sub get_key_lookup {
+  my $lookup = {};
+  my $homedir = $ENV{HOME};
+  my $filename = "$homedir/.ssh/.fingerprints";
+  generate_fingerprints() unless -e $filename;
+  open( my $fh, '<', $filename) or die "could not open fingerprints, $!";
+  while (my $line = <$fh>) {
+    chomp $line;
+    my ($size, $fingerprint, $filename, $type) = split(/\s+/, $line);
+    $lookup->{$fingerprint} = {
+      size => $size,
+      fingerprint => $fingerprint,
+      filename => $filename,
+      type => $type,
+    };
+  }
+  return $lookup;
+}
+
+sub generate_fingerprints {
+  system("find ~/.ssh -name '*.pub' -exec ssh-keygen -lf '{}' \\; > ~/.ssh/.fingerprints");
+}
