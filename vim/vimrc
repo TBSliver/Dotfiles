@@ -84,7 +84,11 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-let g:syntastic_tex_checkers = []
+let g:syntastic_tex_checkers = ['chktex']
+if has('win32')
+  " TODO figure out why chktex doesnt work
+  let g:syntastic_tex_checkers = []
+endif
 
 let g:vimtex_syntax_minted = [
   \ {
