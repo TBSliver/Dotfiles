@@ -111,4 +111,7 @@ augroup resCur
 augroup END
 
 
-set guifont=Hack:h9:cANSI:qDRAFT
+set guifont=Hack:h12:cANSI:qDRAFT
+set guioptions-=R
+set guioptions-=L
+set guioptions-=r
