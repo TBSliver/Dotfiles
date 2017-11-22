@@ -115,3 +115,5 @@ set guifont=Hack:h12:cANSI:qDRAFT
 set guioptions-=R
 set guioptions-=L
 set guioptions-=r
+set guioptions-=t
+set guioptions-=e
