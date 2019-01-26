@@ -2,11 +2,12 @@ let vimplug_path = '~/.vim/autoload'
 if has('win32')
   let vimplug_path = '~/vimfiles/autoload'
   set shell=powershell
-  set shellcmdflag=-command
+  set shellcmdflag=-NoProfile\ -NoLogo\ -NonInteractive\ -Command
+  set shellpipe=|
+  set shellredir=>
 endif
 
 let vim_plug = vimplug_path . '/plug.vim'
-
 
 " auto-install vim-plug
 if !filereadable(expand(vim_plug))
@@ -23,27 +24,26 @@ endif
 call plug#begin()
 Plug 'tpope/vim-sensible'
 
-Plug 'agude/vim-eldar'
-
+" Themes
 Plug 'itchyny/lightline.vim'
-
 Plug 'morhetz/gruvbox'
 
-"Plug 'yko/mojo.vim', { 'do': 'make install' }
-
-Plug 'kchmck/vim-coffee-script'
-
+" Utility Plugins
 Plug 'scrooloose/nerdtree'
-
-"Plug 'HerringtonDarkholme/yats.vim'
-
-Plug 'leafgarland/typescript-vim'
-
-Plug 'vim-syntastic/syntastic'
-
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
+" Syntax Highlighters
+Plug 'yko/mojo.vim', { 'do': 'make install' }
+Plug 'kchmck/vim-coffee-script'
+Plug 'leafgarland/typescript-vim'
 Plug 'lervag/vimtex'
+Plug 'akz92/vim-ionic2'
+Plug 'leafgarland/typescript-vim'
+
+" Syntax and Linters
+Plug 'vim-syntastic/syntastic'
+Plug 'natebosch/vim-lsc'
+
 call plug#end()
 
 if has('syntax')
@@ -54,13 +54,23 @@ if has('syntax')
   hi NonText ctermbg=None
 endif
 
-set autoindent
-set smartindent
-set shiftwidth=2
-set tabstop=2
-set expandtab
-set showmatch
+if has('autocmd')
+  " Enable file type detection.
+  " Use the default filetype settings, so that mail gets 'tw' set to 72,
+  " 'cindent' is on in C files, etc.
+  " Also load indent files, to automatically do language-dependent indenting.
+  filetype plugin indent on
+endif
 
+set autoindent
+"set smartindent   " Insert extra indents automatically
+set shiftwidth=2  " How much to indent by using >> etc
+set tabstop=2     " Tab width
+set expandtab     " Use spaces instead of tabs
+set showmatch     " Show matching brackets
+set showtabline=2 " Always show tabs
+
+" Put swapfiles in a more useful place - stops git finding vim tmp files
 let swapfile_dir = '.vim/swp//'
 if has('win32')
   let swapfile_dir = 'vimfiles/swp//'
@@ -72,6 +82,9 @@ endif
 
 exec 'set directory=$HOME/' . swapfile_dir
 
+" Fortran source formatting options
+let fortran_free_source=1
+let fortran_do_enddo=1
 
 "Syntastic settings
 set statusline+=%#warningmsg#
@@ -110,7 +123,7 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
-
+" Gui specific messing
 set guifont=Hack:h12:cANSI:qDRAFT
 set guioptions-=R
 set guioptions-=L
