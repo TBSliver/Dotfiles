@@ -39,10 +39,14 @@ Plug 'leafgarland/typescript-vim'
 Plug 'lervag/vimtex'
 Plug 'akz92/vim-ionic2'
 Plug 'leafgarland/typescript-vim'
+Plug 'dart-lang/dart-vim-plugin'
 
 " Syntax and Linters
 Plug 'vim-syntastic/syntastic'
 Plug 'natebosch/vim-lsc'
+
+Plug 'azizlight/tasklist.vim'
+Plug 'blindfs/vim-taskwarrior'
 
 call plug#end()
 
@@ -69,18 +73,6 @@ set tabstop=2     " Tab width
 set expandtab     " Use spaces instead of tabs
 set showmatch     " Show matching brackets
 set showtabline=2 " Always show tabs
-
-" Put swapfiles in a more useful place - stops git finding vim tmp files
-let swapfile_dir = '.vim/swp//'
-if has('win32')
-  let swapfile_dir = 'vimfiles/swp//'
-endif
-
-if !isdirectory(expand('~/' . swapfile_dir))
-  execute "silent !mkdir -p ~/" . swapfile_dir
-endif
-
-exec 'set directory=$HOME/' . swapfile_dir
 
 " Fortran source formatting options
 let fortran_free_source=1
